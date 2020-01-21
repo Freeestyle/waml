@@ -1,0 +1,28 @@
+<div class="modal fade registration_modal" id="registration_form_button_modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">S'inscrire</h5>
+            </div>
+            <div class="modal-body">
+                <div class="messageError4 m-3">
+                    <div class="messageError3 text-center"></div>
+                </div>
+                {# Formulaire inscription#}
+                {{ form_start(registrationForm, {'action': path('inscription')}) }}
+                {{ form_widget (registrationForm.lastname) }}
+                {{ form_widget (registrationForm.firstname) }}
+                {{ form_widget (registrationForm.email) }}
+                {{ form_widget (registrationForm.plainPassword.first) }}
+                {{ form_widget (registrationForm.plainPassword.second) }}
+                <button data-target={{ path('inscription') }} type="submit" id="register_button" class="btn btn-outline-info w-100">
+                    Inscription
+                </button>
+                {{ form_end(registrationForm) }}
+                {#  Fin formulaire inscription#}
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>

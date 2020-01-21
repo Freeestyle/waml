@@ -1,0 +1,24 @@
+<div class="row">
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            {% if user.photo is not null %}
+                <img src="{{ asset('images/' ~ user.photo) }}"
+                     width="280px">
+            {% else %}
+                <img src="https://picsum.photos/200"
+                     height="200px">
+            {% endif %}
+        </li>
+        <li class="list-group-item">Nom : {{ user.lastname }} </li>
+        <li class="list-group-item">Prénom : {{ user.firstname }}</li>
+        <li class="list-group-item">Email : {{ user.email }} </li>
+        <li class="list-group-item">Catégories :<br>
+            {% for category in user.postCategories %}
+                <a href="{{ path('app_index_post', {'name': category.name}) }}">
+                    <img src="{{ asset('images/' ~ category.logo) }}" alt=""
+                         class="img-thumbnail mt-3" width="40px">
+                </a>
+            {% endfor %}
+        </li>
+    </ul>
+</div>

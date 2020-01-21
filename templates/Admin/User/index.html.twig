@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin{% endblock %}
+
+{% block body %}
+    <h1>Gestion utilisateurs</h1>
+    <table class="table table-striped">
+        <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Email</th>
+            <th>Photo</th>
+            <th>Role</th>
+            <th>Annonces</th>
+            <th width="200px">Options</th>
+        </tr>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.lastname }}</td>
+                <td>{{ user.firstname }}</td>
+                <td>{{ user.email }}</td>
+                <td><img src="{{ asset('images/' ~ user.photo) }}" alt="" height="50px"></td>
+                <td>{{ user.role }}
+                </td>
+                <td>
+                    <a href="{{ path('app_admin_post_index', {"id":user.id}) }}" class="btn btn-outline-warning">Voir les annonces
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ path('app_admin_user_edit', {"id":user.id})}}" class="btn btn-outline-info p-3">
+                        <i class="fas fa-edit" style="font-size: large"></i>
+                    </a>
+                    <a href="{{ path('app_admin_user_delete', {"id":user.id}) }} "
+                       onclick="return confirm('are u sure?')" class="btn btn-outline-dark p-3">
+                        <i class="fas fa-trash-alt" style="font-size: large"> </i>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

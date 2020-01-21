@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Messagerie {% endblock %}
+
+{% block body %}
+    <h1 class="mb-1">Conversez avec {{ message.receivingUser }}</h1>
+
+<p>
+    From : {{ message.sendingUser }}
+</p>
+<p>
+    To : {{ message.receivingUser }}
+<p>
+    {% include 'message/_messageForm.html.twig' %}
+    {# fin formulaire d'envoi message et debuit fil de conversation #}
+
+{% endblock %}
+
+
+

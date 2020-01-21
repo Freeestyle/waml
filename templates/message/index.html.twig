@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inbox{% endblock %}
+{% block body %}
+
+    {% if app.user is null %}
+        <h1>Pour accéder à votre inbox <br>
+            vous devez
+            <button type="button" class="titre_h1" data-toggle="modal" data-target="#login_form_modal"
+                    id="login_form_button_modal">
+                vous connecter
+            </button>
+            <br>ou
+            <button type="button" class="titre_h1" data-toggle="modal" data-target="#registration_form_button_modal">
+                vous inscrire
+            </button>
+            <i class="far fa-smile-wink"></i></h1>
+        </h1>
+
+        {#  Mettre eventuellement en ligne les categories #}
+        {#
+        <div class="row justify-content-between mb-5">
+            {% for category in categories %}
+                <div class="m-3 flex-md-wrap  text-center">
+                    <figure>
+                        <a href="/annonces/{{ category.name }}"
+                           class="text-lg-center text-secondary">
+                            <img src="{{ asset('images/' ~ category.logo ) }}" alt="" class="zoom-medium" width="100px">
+                            <figcaption>{{ category.name }}</figcaption>
+                        </a>
+                    </figure>
+                </div>
+            {% endfor %}
+        </div>
+        #}
+
+
+    {% else %}
+        <h1>Ma messagerie</h1>
+        <div class="row">
+            <div class="col-4 ">
+                <div class="list-group list-group-flush border-right " id="list-tab" role="tablist">
+                    <a class="list-group-item-info list-group-item-action active p-4" id="list-sent-list"
+                       data-toggle="list" href="#list-sent" role="tab" aria-controls="sent">
+                        Messages envoyes
+                    </a>
+                    <a class="list-group-item-info list-group-item-action p-4" id="list-received-list"
+                       data-toggle="list" href="#list-received" role="tab" aria-controls="received">
+                        Mesages reçus
+                    </a>
+                </div>
+            </div>
+            <div class="tab-content list-group list-group-flush col-6" id="nav-tabContent">
+                <div class="tab-pane fade show active"
+                     id="list-sent" role="tabpanel"
+                     aria-labelledby="list-sent-list">
+                    {% for sent in sentMessages %}
+                        <a href="{{ path('app_message_send', {'id': sent.receivingUser.id}) }}"
+                           class="list-group-item list-group-item-action justify-content-between">
+                            {{ sent.receivingUser }} : {{ sent.content[:20] }}...<br>
+                            {% if sent.post is not null %}
+                                <em>Sujet : {{ sent.post.title }}</em>
+                            {% endif %}
+                            <div class="text-right">
+                                <small>le {{ sent.sendingDate|date('d/m/Y') }}</small>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+                <div class="tab-pane fade"
+                     id="list-received" role="tabpanel"
+                     aria-labelledby="list-received-list">
+                    {% for received in receivedMessages %}
+                        {#                {{ dump(message) }}#}
+                        <a href="{{ path('app_message_send', {'id': received.sendingUser.id}) }}"
+                           class="list-group-item list-group-item-action justify-content-between">
+                            {{ received.sendingUser.firstname }} : {{ received.content[:20] }}...<br>
+                            {% if received.post is not null %}
+                                <em>Sujet : {{ received.post.title }}</em>
+                            {% endif %}
+                            <div class="text-right">
+                                <small>le {{ received.sendingDate|date('d/m/Y') }}</small>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

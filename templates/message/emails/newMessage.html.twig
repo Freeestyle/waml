@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Nouveau message inbox</title>
+</head>
+<body>
+<div>
+    <h2 style="color:#253f58; font-size: 25px;">WALM - Nouveau message reçu</h2>
+    <p style="font-size: 15px;">
+        <strong style="color: #d92139; font-size: 15px;">
+            {{ firstname }} </strong>
+        vous avez reçu un nouveau un message privé. Vous pouvez le visualizer en suivant ce lien </p>
+    <p style="font-size: 15px;">
+        <a href="{{ absolute_url(path('app_message_index')) }}">
+            Votre WALM inbox</a>
+    </p>
+    <p style="font-size: 15px;">L'Equipe de WALM, Créateur de lien social.
+        <br/>
+        Enjoy !
+    </p>
+</div>
+</body>
+</html>

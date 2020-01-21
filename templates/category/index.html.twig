@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h1>Les catégories : </h1>
+    <div class="col-12">
+        <div class="row">
+            {% for category in categories %}
+{#                {{ dump(category) }}#}
+                <div class="card m-2" style="width: 15rem;">
+                    <a href="{{ path('app_index_post', {'name': category.name}) }}">
+                        <img src=" {{ asset('images/' ~ category.logo) }}" class="card-img-top" alt="">
+                        <div class="card-body">
+                            <p class="card-text text-center">
+                                {{ category.name }}
+                            </p>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

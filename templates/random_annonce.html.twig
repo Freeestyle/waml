@@ -1,0 +1,100 @@
+{% block body %}
+    <h2 class="titre_h2">Retrouvez les annonces du moment !</h2>
+
+
+
+    <div class="card-deck">
+        {% for post in posts %}
+
+
+            <div class="card">
+                <div class="card-hidden">
+                    <a href="{{ path('app_post_showpost', {'id': post.id}) }}">
+                        {% if post.image is not empty %}
+                            <img src="{{ asset('images/' ~ post.image) }}" class="card-img zoom-light" alt="...">
+                        {% endif %}
+                    </a>
+                </div>
+                <div class="card-body">
+                    <a href="{{ path('app_post_showpost', {'id': post.id}) }}"
+                       class="list-item text-secondary">
+                        <h5 class="card-title">{{ post }}</h5>
+                    </a>
+                    <p class="card-text"> {{ post.content[:100] }}...</p>
+
+                    <small class="text-muted mt-5">
+                        Posté le : {{ post.publicationDate|date('d/m/Y') }}
+                    </small>
+                </div>
+
+
+                <div class="text-right m-3">
+                    {% if post.author != app.user %}
+                        <a href="{{ path('app_message_send', {'id': post.author.id, 'idPost' : post.id}) }}"
+                           class="btn btn-outline-warning p-2">
+                            <i class="far fa-envelope" style="font-size: large"> </i>
+                        </a>
+                    {% endif %}
+                    {% if app.user == post.author or is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('app_post_edit', {'id': post.id}) }}"
+                           class="btn btn-outline-info p-2">
+                            <i class="fas fa-edit" style="font-size: large"></i>
+                        </a>
+                        <a href="{{ path('app_post_delete', {'id': post.id}) }}
+                                " onclick="return confirm('are u sure?')" class="btn btn-outline-dark p-2">
+                            <i class="fas fa-trash-alt" style="font-size: large"> </i>
+                        </a>
+                    {% endif %}
+                </div>
+
+
+                <div class="card-footer d-flex justify-content-between">
+                    <div class="mr-5">
+                            <span class="text-muted">
+                            écrit par
+                            {% if app.user == post.author %}
+                                <a href="{{ path('app_user_profil') }}"><em>{{ post.author }}</em></a>
+                            {% else %}
+                                <a href="{{ path('app_user_profilevisit', {'id': post.author.id}) }}"
+                                   class=" annonceur">
+                                    <em>{{ post.author }}</em>
+                                </a>
+                            {% endif %}
+                        </span>
+
+                        <br>
+                        <a href="{{ path('app_index_region', {'name': post.region.name}) }}">
+                            <small class="text-muted">Region : {{ post.region.publicName }}</small>
+                        </a>
+                    </div>
+
+
+                    <div class="text-right">
+                        <a href="{{ path('app_index_post', {'name': post.category.name}) }}"
+                           class="list-item text-right">
+                            <img src="{{ asset('images/' ~ post.category.logo) }}"
+                                 class="zoom-medium" width="75px"
+                                 alt="...">
+                        </a>
+                    </div>
+
+
+                </div>
+            </div>
+
+        {% endfor %}
+
+
+    </div>
+
+
+
+
+
+
+
+
+{% endblock %}
+
+
+

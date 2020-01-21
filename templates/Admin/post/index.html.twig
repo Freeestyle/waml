@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h4>Gestion des annonces</h4>
+    <table class="table table-striped">
+        <tr>
+            <th>Auteur</th>
+            <th>Titre de l'annonce</th>
+            <th>Catégories</th>
+            <th>Contenu</th>
+            <th width="130px">Photo principale</th>
+            <th>Commentaires</th>
+            <th>Date publication</th>
+            <th width="130px">Options</th>
+        </tr>
+        {% for post in posts %}
+            <tr>
+                <td>{{ post.author }}</td>
+                <td>
+                <a href="{{ path('app_post_showpost', {"id":post.id}) }}" class="text-info">
+                    {{ post.title }}</a>
+                </td>
+                <td>{{ post.category.name }}</td>
+
+                <td>
+                <a href="{{ path('app_admin_post_ajaxcontent', {"id":post.id}) }}"
+                   class="btn btn-outline-secondary btn-content">
+                    Aperçu
+                </a>
+                </td>
+
+                <td >
+                    <img src="{{ asset('images/' ~ post.image) }}"
+                         class="img-thumbnail mw-100 zoom" >
+                </td>
+
+
+                <td class="text-center">
+                    <a href="{{ path('app_comment_index', {"id":post.id}) }}">
+                        {{ post.comments|length }}
+                    </a>
+                </td>
+                <td>
+                    {{ post.publicationDate|date('d/m/Y') }}
+                </td>
+                <td class="pr-1 pl-1">
+                    <a href="{{ path('app_admin_post_delete', {"id":post.id}) }}"
+                       onclick="return confirm('Etes-vous sûr ?')"
+                       class="btn btn-outline-dark p-3">
+                        <i class="fas fa-trash-alt" style="font-size: large"> </i>
+                    </a>
+                    <a href="{{ path('app_admin_post_edit', {'id': post.id}) }}"
+                       class="btn btn-outline-info p-3">
+                        <i class="fas fa-edit" style="font-size: large"></i>
+                    </a>
+
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+
+<div class="modal" tabindex="-1" role="dialog" id="modal-content">
+    <div class="modal-dialog" role="document">user_id
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Contenu de l'annonce</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+    {#    surchage du bloc parent de base.html.twig#}
+    {{ parent() }}
+
+    <script>
+        $(function () {
+            $('.btn-content').click(function (event) {
+                event.preventDefault();
+
+                var href = $(this).attr('href');
+
+                // appel de la page ajaxcontent en GET
+                $.get(
+                    href,
+                    function(response) {
+                        var $modal = $('#modal-content');
+
+                        $modal.find('.modal-body').html(response);
+
+                        $modal.modal('show');
+
+                    }
+                );
+            });
+
+        });
+
+    </script>
+
+{% endblock %}
+

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1 class="m-5">Edition catégorie</h1>
+
+    {# ouverture de la balise form #}
+    {{ form_start(form) }}
+
+    {# bloc du formularire pour le champ name
+    form_row >> ecriture du lablel + l'input #}
+    {{ form_row(form.name) }}
+    {{ form_row(form.logo) }}
+
+    <div class="text-right">
+        <button class="btn btn-info">
+            Enregistrer
+        </button>
+        <a href="{{ path('app_admin_category_index') }}" class="btn btn-outline-info">
+            Retour
+        </a>
+    </div>
+    {# fermeture balise form #}
+    {{ form_end(form) }}
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {# pour surcharger le block parent#}
+    {{ parent() }}
+
+    <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            bsCustomFileInput.init();
+        })
+    </script>
+
+{% endblock %}

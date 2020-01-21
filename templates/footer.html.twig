@@ -1,0 +1,55 @@
+<footer class="site-footer">
+    {% block footer %}
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-6 pr-5">
+                    <a href="{{ path('app_index_index') }}" class="navbar-brand text-light logo">
+                        <img src="{{ asset('images/logo-waml-vert.png') }}" alt="logo waml créateur de lien social">
+                    </a>
+                    <p class="text-justify">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque ea eius
+                        est expedita ipsum magni possimus qui quisquam repellat.
+                    </p>
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <a href="#categorie-list" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="categorie-list">
+                        <h6>Voir les Catégories</h6>
+                    </a>
+                    <ul class="footer-links collapse multi-collapse" id="categorie-list">
+                        {% for category in categories %}
+                            <li><a href="/annonces/{{ category.name }}">{{ category.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <a href="#region-list" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="region-list">
+                        <h6>Voir les Régions</h6>
+                    </a>
+                    <ul class="footer-links collapse multi-collapse" id="region-list">
+                        {% for region in regions %}
+                            <li><a href="/{{ region.name }}/annonces">{{ region.publicName }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <hr>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-sm-6 col-xs-12">
+                    <p class="copyright-text">Copyright &copy; {{ "now"|date('Y', timezone="Europe/Paris") }} All Rights Reserved by
+                        <a href="#">Waml Corporation</a>.
+                    </p>
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <ul class="social-icons">
+                        <li><a class="facebook" href="#"><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a class="twitter" href="#"><i class="fab fa-twitter"></i></a></li>
+                        <li><a class="dribbble" href="#"><i class="fab fa-dribbble"></i></a></li>
+                        <li><a class="linkedin" href="#"><i class="fab fa-linkedin"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+</footer>

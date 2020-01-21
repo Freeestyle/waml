@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {# si le user n'est pas connectée #}
+    {% if app.user is null %}
+        <h1>Pour déposer une annonce <br>
+            vous devez
+            <button type="button" class="titre_h1" data-toggle="modal" data-target="#login_form_modal"
+                    id="login_form_button_modal">
+                vous connecter
+            </button>
+            <br>ou
+            <button type="button" class="titre_h1" data-toggle="modal" data-target="#registration_form_button_modal">
+                vous inscrire
+            </button>
+            <i class="far fa-smile-wink"></i></h1>
+    {% else %}
+        <h1>Mon annonce</h1>
+        {#    ouvre la balise form #}
+        {{ form_start(form) }}
+
+        {#    à récupérer
+            {{ form_row(form.category) }}#}
+
+        {{ form_widget (form.title, {'attr': {'placeholder': "Le titre de l'annonce"}}) }}
+        {{ form_widget (form.content, {'attr': {'placeholder': "Contenu de l'annonce"}}) }}
+        {{ form_widget (form.category) }}
+        {{ form_widget (form.region) }}
+
+        {{ form_row(form.image) }}
+        {{ form_row(form.image2) }}
+        {{ form_row(form.image3) }}
+
+        {% if original_image is not null or original_image2 is not null or original_image3 is not null %}
+            <h6>Actuellement :</h6>
+            <div class="d-flex postedit" style="height: 300px">
+
+                {% if original_image is not null %}
+                    <img src="{{ asset('images/' ~ original_image ) }}" width="300" height="200"
+                         class="img-thumbnail align-self-center">
+                {% endif %}
+                {% if original_image2 is not null %}
+                    <img src="{{ asset('images/' ~ original_image2 ) }}"
+                         width="300" height="200"
+                         class="img-thumbnail align-self-center">
+                {% endif %}
+                {% if original_image3 is not null %}
+                    <img src="{{ asset('images/' ~ original_image3 ) }}"
+                         width="300" height="200"
+                         class="img-thumbnail align-self-center">
+                {% endif %}
+            </div>
+        {% endif %}
+        <div class="text-right">
+            <button type="submit" class="btn btn-info">
+                Enregistrer
+            </button>
+
+            <a href="{{ path('app_post_edit') }}"
+               class="btn btn-outline-info">
+                Retour
+            </a>
+        </div>
+        {{ form_end(form) }}
+    {% endif %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
+
+    {#   script permettant d'afficher le nom du fichier de la photo uploadee #}
+    {#   avec fonction JQUERY // pour être sur que le DOM est prêt à être manipulé par le JS #}
+    <script>
+        $(document).ready(function () {
+            bsCustomFileInput.init();
+        })
+    </script>
+{% endblock %}
+
+

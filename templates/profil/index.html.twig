@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="col-12">
+        <h1 class="m-5">Mon profil !</h1>
+        <div class="row">
+            <div class="col-3 mr-4">
+                {% include 'profil/_detail.html.twig' with {'user': user} only %}
+                <a href="{{ path('app_user_edit') }}" class="btn btn-outline-info m-2">
+                    Modifier
+                </a>
+                <a href="{{ path('app_favorite_profilfavs') }}" class="btn btn-outline-warning m-2 showFavorites">
+                    Voir mes favoris
+                </a>
+                <a href="{{ path('app_post_edit') }}" class="btn btn-outline-warning m-2 showPosts">
+                    Voir mes annonces
+                </a>
+            </div>
+            <div class="col-7 ml-4" id="posts">
+                {% if user.posts is empty %}
+                    <p>Vous n'avez pas encore d'annonce !</p>
+                {% else %}
+                    <p class="mb-5">Mes annonces :</p>
+                {% endif %}
+                {% include '/post/listPost.html.twig' with {'posts': posts, 'user': user} only %}
+
+            </div>
+            <div class='col-7 ml-4' id='favs' style="display: none">
+
+                {% if app.user.favorites is empty %}
+                    <p>Aucun favori enregistré</p>
+                {% else %}
+                    <p>Mes favoris</p>
+                    {% include '/favoris/listFav.html.twig' %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+{#
+     Script permettant de "switch" l'affichage des annonces ou favoris dans le profil utilisateur
+#}
+    <script>
+        $(function () {
+            $('.showFavorites').click(function (e) {
+                e.preventDefault();
+                $('#posts').hide();
+                $('#favs').show();
+            })
+        });
+        $(function () {
+            $('.showPosts').click(function (e) {
+                e.preventDefault();
+                $('#favs').hide();
+                $('#posts').show();
+            })
+        });
+    </script>
+{% endblock %}

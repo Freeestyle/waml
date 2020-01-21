@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Modification de mon profil</h1>
+    <div class="container">
+
+        {{ form_start(form) }}
+        {{ form_row(form.lastname) }}
+        {{ form_row(form.firstname) }}
+        {{ form_row(form.email) }}
+        <div class="row">
+            <div class="col-lg-6">
+                {% if original_image is not null %}
+                    <p>
+                        Actuellement :
+                        <img src="{{ asset('images/' ~ original_image) }}" height="200px" class="rounded">
+                    </p>
+                {% endif %}
+            </div>
+            <div class="col-lg-6">
+                {{ form_row(form.photo) }}
+            </div>
+        </div>
+        <div class="text-left mt-5">
+            <button type="submit" class="btn btn-info">
+                Enregistrer
+            </button>
+            <a href="{{ path('app_user_resetpassword') }}" class="btn btn-warning">Réinitialiser le mot de passe</a>
+
+            <a href="{{ path('app_user_profil') }}" class="btn btn-dark">
+                Retour
+            </a>
+        </div>
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}
+

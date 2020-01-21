@@ -1,0 +1,48 @@
+security:
+  encoders:
+    App\Entity\User:
+      algorithm: auto
+      # encoder des mot de passe
+
+      # fornisseur d'utilisateurqui est appelé automatiquement
+      #on peut en avoir plusieurs qui s'occuppent de differents classes
+  # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+  providers:
+    # used to reload user from session & other features (e.g. switch_user)
+    app_user_provider:
+      entity:
+        class: App\Entity\User
+        property: email
+  firewalls:
+    # correspond à la protection de notre site
+    dev:
+      pattern: ^/(_(profiler|wdt)|css|images|js)/
+      security: false
+    main:
+      anonymous: lazy
+
+      # route du formulaire de login
+      form_login:
+        login_path: app_registration_login
+        check_path: app_registration_login
+
+      logout:
+        path: app_registration_logout
+
+      # provider défini au-dessus ds la section provider
+      provider: app_user_provider
+
+      # commence par '/' sur tout le site (^/ = expression reguliere)
+      pattern: ^/
+
+      # activate different ways to authenticate
+      # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+      # https://symfony.com/doc/current/security/impersonating_user.html
+      # switch_user: true
+
+  # Easy way to control access for large sections of your site
+  # Note: Only the *first* access control that matches will be used
+  access_control:
+   - { path: ^/admin, roles: ROLE_ADMIN }
+  # - { path: ^/profile, roles: ROLE_USER }

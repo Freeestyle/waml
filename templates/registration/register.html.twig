@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+<body class="bg-formulaire">
+<div class="row justify-content-center">
+    <div class="card  col-5  mb-3 p-5">
+
+            <h1 class="text-center">Inscription</h1>
+        <h5 class="mb-3">
+            <small>Vous avez déjà un compte ?
+                <a href="{{ path('app_registration_login') }}"
+                   class="text-info" style="font-size: large">
+                    <b>Connectez-vous !</b>
+                </a>
+            </small>
+        </h5>
+            {{ form_start(registrationForm) }}
+            {{ form_widget (registrationForm.lastname) }}
+            {{ form_widget (registrationForm.firstname) }}
+            {{ form_widget (registrationForm.email) }}
+            {# {{ form_widget (registrationForm.email, {'attr': {'placeholder': 'Email'}}) }}#}
+            {{ form_widget (registrationForm.plainPassword.first) }}
+            {{ form_widget (registrationForm.plainPassword.second) }}
+
+            {# champ caché : $_SERVER['HTTP_REFERER'] #}
+            <input type="hidden" name="_target_path"
+                   value="{{ app.request.headers.get('referer') }}">
+            <div class="text-right">
+                <button type="submit"
+                        class="btn btn-outline-info w-100">
+                    Enregistrer
+                </button>
+            </div>
+            {{ form_end(registrationForm) }}
+
+    </div>
+</div>
+</body>
+{% endblock %}

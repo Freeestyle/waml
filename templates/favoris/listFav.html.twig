@@ -1,0 +1,62 @@
+{# Template pour l'affichage des favoris #}
+{# include dans la page favoris.html.twig#}
+{# include dans la page favoris.index.twig#}
+{% for favorite in favorites %}
+    <div class="card mb-3 p-2">
+        <div class="row no-gutters">
+            <div class="col-3">
+                {% if favorite.post.image is not empty %}
+                    <img src="{{ asset('images/' ~ favorite.post.image) }}" class="card-img" alt="...">
+                {% endif %}
+                <a href="{{ path('app_index_region', {'name': favorite.post.region.name}) }}"
+                   class="list-item text-secondary ml-2 mt-5"
+                   style="font-size: small">
+                    <em>Region : {{ favorite.post.region.publicName }}</em>
+                </a>
+            </div>
+            <div class="col-9">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-10">
+                            <a href="{{ path('app_post_showpost', {'id': favorite.post.id}) }}"
+                               class="list-item text-secondary">
+                                <h5>{{ favorite.post }}</h5>
+                            </a>
+                        </div>
+                        <div class="col-2 text-center">
+                            <a href="{{ path('app_index_post', {'name': favorite.post.category.name}) }}"
+                               class="list-item text-right">
+                                <img src="{{ asset('images/' ~ favorite.post.category.logo) }}"
+                                     class="img-thumbnail" width="100px"
+                                     alt="...">
+                            </a>
+                        </div>
+                    </div>
+                    <p class="card-text">
+                        {{ favorite.post.content[:50] }}...
+                    </p>
+                    <p class="card-text">
+                        <small class="text-muted">
+                            écrit par
+                            <a href="{{ path('app_user_profilevisit', {'id': favorite.post.author.id}) }}"
+                               class="list-item text-secondary">
+                                <em>{{ favorite.post.author }}</em>
+                            </a>
+                        </small> <br>
+                        <a href="{{ path('app_favorite_delete', {'id':favorite.id}) }} "
+                           onclick="return confirm('are u sure?')"
+                           class="btn btn-outline-dark p-1 mt-2">
+                            Supprimer de mes favoris
+                        </a>
+                    <div class="text-right">
+                        <a href="{{ path('app_message_send',
+                            {'id': favorite.post.author.id, 'idPost' : favorite.id}) }}"
+                           class="btn btn-outline-warning p-2">
+                            <i class="far fa-envelope" style="font-size: large"> </i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}

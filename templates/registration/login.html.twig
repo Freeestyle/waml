@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <body class="bg-formulaire">
+    <div class="row justify-content-center">
+        <div class="card col-md-auto col-6  mb-3 p-5">
+            <h1 class="text-center mb-0">Connexion <br></h1>
+            <h5 class="mb-3">
+                <small>Si vous n'avez pas un compte <a href="{{ path('inscription') }}"
+                                                       class="text-info" style="font-size: large"><b>inscrivez-vous
+                            !</b></a></small>
+            </h5>
+            <form method="post">
+                <div class="form-group">
+                    <input type="email" class="form-control" name="_username"
+                           value="{{ last_username }}" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" name="_password" placeholder="Mot de passe">
+                </div>
+
+                {# champ caché : $_SERVER['HTTP_REFERER'] #}
+                <input type="hidden" name="_target_path"
+                       value="{{ app.request.headers.get('referer') }}">
+                <div class="text-right">
+                    <button type="submit" class="btn btn-outline-info w-100">
+                        Se connecter
+                    </button>
+                    <a href="{{ path('app_forgotten_password') }}">Mot de passe oublié</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    </body>
+{% endblock %}
+

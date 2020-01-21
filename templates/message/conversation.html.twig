@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Messagerie {% endblock %}
+
+{% block body %}
+    <h1 class="mb-1">Conversez avec
+            {{ contact }}
+        {% if post is not null %}
+            <br><small>à propos de "{{ post.title }}"</small>{% endif %}</h1>
+    {% include 'message/_messageForm.html.twig' %}
+    <div class="list-group list-group-flush">
+
+        {% for message in messages %}
+            {#            {{ dump(message) }}#}
+            <div class="d-flex">
+            {% if message.sendingUser != app.user %}
+                {% if message.sendingUser.photo is not null %}
+                    <a class="nav-item nav-link"
+                       href="{{ path('app_user_profil') }}">
+                        <img src="{{ asset('images/' ~ message.sendingUser.photo) }}"
+                             class="photo-nav" style="max-height: 50px; max-width: 50px">
+                    </a>
+                {% else %}
+                    <a href="{{ path('app_user_profil') }}" class="nav-item nav-link">
+                        <i class="fas fa-user-circle fa-4x text-info"></i>
+                    </a>
+                {% endif %}
+            {% endif %}
+
+            <div
+                    {% if message.sendingUser == app.user %}
+                        class="sent list-group-item list-group-item-action list-group-item-info text-right mb-3 col-9 offset-3 pl-3"
+                    {% else %}
+                        class="received list-group-item list-group-item-action bg-light mb-3 col-9 pr-3"
+                    {% endif %}
+                    >
+                <p>
+                    <a href="{{ path('app_user_profilevisit', {'id': message.sendingUser.id}) }}">
+                    <em class="annonceur">
+                        {{ message.sendingUser }} </em>
+                        {% if message.post is not null %}
+                        à propos de <strong>"{{ message.post.title }}"</strong>
+                        {% endif %}
+
+                    </a>
+                </p>
+
+                <div style="font-size: x-small">
+                    Envoyé le {{ message.sendingDate|date('d-m-Y H:i') }}
+                </div>
+                <p class="mb-1 mt-2">
+                    {{ message.content }}
+                </p>
+            </div>
+            </div>
+        {% endfor %}
+
+
+    </div>
+{% endblock %}
+
+
+
