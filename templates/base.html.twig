@@ -207,8 +207,7 @@
 {{ render(controller('App\\Controller\\CategoryController::footer')) }}
 
 
-</body>
-</html>
+
 {% block javascripts %}
     <script
             src="https://code.jquery.com/jquery-3.4.1.min.js"
@@ -218,6 +217,7 @@
     <script>
         // Ajax modal connexion
         $('#login_button').click(function () {
+
             // console.log('login');
             $.post(
                 '/connexion',
@@ -236,7 +236,13 @@
         // Fin Ajax modal connexion
 
         // Ajax modal inscription
-        $('#register_button').click(function () {
+        $('#register_button').click(function (e) {
+            $pwlength = $('#registration_form_plainPassword_first').val().length;
+            if($pwlength<5){
+                alert('le mot de passe doit avoir minimum 5 caractères');
+                e.preventDefault();
+                return;
+            }
             $.post(
                 '/inscription',
                 $("input[name='registration_form']").serialize(),
@@ -256,3 +262,6 @@
     </script>
     <script src="{{ asset('lib/js/script.js') }}"></script>
 {% endblock %}
+
+</body>
+</html>

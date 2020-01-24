@@ -46,3 +46,18 @@ svgStates.forEach(function(el) {
         addOnFromState(el);
     });
 });
+
+
+(function($) {
+   $(document).ready(function(){
+       $('#Bt-registration-submit').click(function(e){
+           $pwlength = $('#registration_form_plainPassword_first').val().length;
+           if($pwlength<5){
+               alert('le mot de passe doit avoir minimum 5 caractères');
+               e.preventDefault();
+               return;
+           }
+       });
+   });
+}(jQuery));
+
